@@ -5,7 +5,6 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import {Container, withStyles} from "@material-ui/core";
 
 import AppContextProvider from "./AppContextProvider";
-import HelpApp from "app/Pages/Help/HelpApp";
 import LostFound from "app/Pages/Help/LostFound/LostFound"
 import NexTripApp from "app/Pages/TripTools/NexTrip/NexTripApp";
 import UserActionBar from "app/Pages/Navigation/UserActionBar/UserActionBar";

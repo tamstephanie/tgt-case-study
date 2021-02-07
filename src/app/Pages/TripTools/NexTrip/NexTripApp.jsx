@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import {Route, Switch} from "react-router-dom";
 
-import AppPage from "app/General/Containers/AppPage";
+import AppPage from "app/General/Containers/AppPage/AppPage";
 import DepartureForm from "./DepartureForm/DepartureForm";
 
 class NexTripApp extends PureComponent {

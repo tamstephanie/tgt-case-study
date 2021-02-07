@@ -3,7 +3,7 @@ import _ from "lodash";
 import {Paper, Typography, withStyles} from "@material-ui/core";
 
 // import MountedComponent from "app/Utilities/MountedComponent";
-import AppPage from "app/General/Containers/AppPage";
+import AppPage from "app/General/Containers/AppPage/AppPage";
 import {LostFoundStyle} from "./LostFound.style";
 
 /**
@@ -26,9 +26,9 @@ class LostFound extends PureComponent {
                 </Typography>
                 <Typography paragraph color="textSecondary">
                     Customer Relations/Lost &amp; Found staff are available by phone from
-                    8 a.m. to 4:30 p.m. Monday through Friday. Please contact us at 612.373.3333,
+                    8 A.M. to 4:30 P.M. Monday through Friday. Please contact us at 612-373-3333,
                     option 3 for compliments, complaints, concerns related to our service, facilities,
-                    equipment, website, mobile app or lost &amp; found or use these online forms.
+                    equipment, website, mobile app, or lost &amp; found or use these online forms.
                 </Typography>
                 <Typography></Typography>
             </React.Fragment>
@@ -39,7 +39,7 @@ class LostFound extends PureComponent {
         return (
             <div className={this.props.classes.lostFoundPage}>
                 <AppPage title={"Lost & Found"}>
-                    <Paper elevation={0}>
+                    <Paper className={this.props.classes.pageContent} elevation={0}>
                         {this.renderText()}
                     </Paper>
                 </AppPage>
