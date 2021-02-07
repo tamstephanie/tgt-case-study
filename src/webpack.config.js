@@ -4,6 +4,7 @@ const webpack = require("webpack");
 const {merge} = require("webpack-merge");
 const HtmlWebpackPlugin = require( "html-webpack-plugin" );
 const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
 
 let common = {
     entry: ["babel-polyfill", "./app/index.js"],
@@ -12,6 +13,9 @@ let common = {
         filename: "index.js"
     },
     resolve: {
+        alias: {
+            content: path.resolve(__dirname, "./content/")
+        },
         extensions: ["*", ".js", ".jsx"],
         modules: [path.resolve(__dirname, "."), "node_modules"]
     },
@@ -40,7 +44,11 @@ let common = {
         new MonacoWebpackPlugin({
             languages: []
         })
-    ]
+    ],
+    optimization: {
+        minimize: true,
+        minimizer: [new TerserWebpackPlugin()]
+    }
 };
 
 let build = {

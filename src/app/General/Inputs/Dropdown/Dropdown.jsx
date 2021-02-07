@@ -8,9 +8,9 @@ import {FormControl, InputLabel, MenuItem, Select, withStyles} from "@material-u
  */
 class Dropdown extends Component {
     render() {
-        let {disabled, emptyOption, classes, inputLabel, options, selectedValue} = this.props;
+        let {disabled, emptyOption, classes, color, inputLabel, options, selectedValue} = this.props;
         return (
-            <FormControl className={classes.dropdown} disabled={disabled} fullWidth>
+            <FormControl className={classes.dropdown} disabled={disabled} fullWidth color={color}>
                 {!_.isEmpty(inputLabel) && (
                     <InputLabel>{inputLabel}</InputLabel>
                 )}
@@ -87,6 +87,7 @@ Dropdown.propTypes = {
             label: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
         })
     ])),
+    color: PropTypes.oneOf(["primary", "secondary"])
 };
 
 Dropdown.defaultProps = {

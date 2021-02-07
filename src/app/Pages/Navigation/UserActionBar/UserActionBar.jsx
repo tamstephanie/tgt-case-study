@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {AppBar, Toolbar, Typography, withStyles} from "@material-ui/core";
+import {AppBar, Container, Toolbar, Typography, withStyles} from "@material-ui/core";
 
-import MetroTransitLogo from "../../content/images/metro-transit-logo.svg";
+import MetroTransitLogo from "content/images/metro-transit-logo.svg";
 
 /**
  * Toolbar that contains various global app functions
@@ -20,9 +20,11 @@ class UserActionBar extends Component {
         return (
             <div className={classes.actionBar}>
                 <AppBar position="static" color="default">
-                    <Toolbar>
-                        <MetroTransitLogo />
-                    </Toolbar>
+                    <Container>
+                        <Toolbar>
+                            <MetroTransitLogo />
+                        </Toolbar>
+                    </Container>
                 </AppBar>
             </div>
         );
@@ -43,10 +45,10 @@ UserActionBar.propTypes = {
 const style = (theme) => ({
     actionBar: {
         "& .MuiAppBar-root": {
-            boxShadow: "none"
+            // boxShadow: "none"
         },
-        "& .MuiToolbar-root": {
-            minHeight: "70px",
+        "& .MuiContainer-root": {
+            padding: "0.5rem 0px"
         }
     }
 });

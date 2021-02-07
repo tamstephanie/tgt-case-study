@@ -1,7 +1,7 @@
 import React from "react";
 import _ from "lodash";
-
 import chai from "chai";
+import {create} from "react-test-renderer";
 import {mount} from "enzyme";
 
 import Dropdown from "../Dropdown";
@@ -10,13 +10,32 @@ import {OPTIONS_COMPLEX, OPTIONS_SIMPLE} from "./data.mock";
 const COMPONENT_NAME = "Dropdown";
 
 describe(COMPONENT_NAME, () => {
-    it("displays a dropdown when given a simple list of strings", () => {
-        let dropdown = mount(<Dropdown onChange={jest.fn()} options={OPTIONS_SIMPLE} />);
+    it("renders a dropdown with simple options", () => {
+        let dropdown = create(
+            <Dropdown
+                selectedValue=""
+                options={OPTIONS_SIMPLE}
+                onChange={jest.fn()}
+                emptyOption="Select a fruit"
+            />
+        );
+        
+        expect(dropdown).toMatchSnapshot();
+    });
 
-        let menuItems = dropdown.find("ForwardRef(MenuItem)");
-        chai.expect(menuItems).to.have.lengthOf(12);
-        _.forEach(menuItems, (menuItem) => {
-            chai.expect(_.include(OPTIONS_SIMPLE, menuItem.text())).to.be.true;
+    it("updates the selected value on ", () => {
+        let dropdown = mount(
+            <Dropdown
+                selectedValue=""
+                options={OPTIONS_SIMPLE}
+                onChange={jest.fn()}
+                emptyOption="Select a fruit"
+            />
+        );
+
+        dropdown.find("input").invoke("onChange")({
+            event: {target: {value: "Lemon"}}
         });
-    })
+        chai.expect(dropdown.prop("selectedValue")).to.equal("Lemon");
+    });
 });

@@ -10,17 +10,38 @@ import {withContext} from "app/WrappersHOCs/Wrappers/withContext";
 
 import Dropdown from "app/General/Inputs/Dropdown/Dropdown";
 import MountedComponent from "app/Utilities/MountedComponent";
+import { color } from "@material-ui/system";
 
 const DEPARTURE_SEARCH_TYPE = Object.freeze({
     ROUTE: "route",
     STOP_ID: "stopId"
 });
 
-const shapeDropdownOptions = (options, valueGetter, labelGetter) => (
-    _.map(options, (option) => ({
-        value: _.get(option, `${valueGetter}`),
-        label: _.get(option, `${labelGetter}`)
-    }))
+/**
+ * Shapes the array of data to match the expected format (see below) for [Dropdown]
+ * @note Assumes that the array passed into the function is an array of objects. Otherwise, there's no need
+ *  to shape the data into the desired format shown below.
+ * <pre>
+ * {
+ *     value: String,
+ *     label: String
+ * }
+ * </pre>
+ *
+ * @param {Object[]} options - The list data to shape
+ * @param {String} valueGetter - Field ID for the value
+ * @param {String} labelGetter - Field ID for retrieving the label
+ */
+const shapeDropdownOptions = (options, valueGetter, labelGetter = null) => (
+    _.map(options, (option) => {
+        let shapedData = {
+            value: _.get(option, `${valueGetter}`)
+        };
+        if (!_.isNil(labelGetter)) {
+            shapedData.label = _.get(option, `${labelGetter}`);
+        }
+        return shapedData;
+    })
 );
 
 /**
@@ -78,6 +99,7 @@ class DepartureForm extends MountedComponent {
                     onChange={departuresData.handleRouteSelection}
                     options={routes}
                     selectedValue={departuresData.routeId}
+                    variant="primary"
                 />
                 {!_.isEmpty(departuresData.routeId) && (
                     <Dropdown
@@ -85,6 +107,7 @@ class DepartureForm extends MountedComponent {
                         onChange={departuresData.handleDirectionSelection}
                         options={directions}
                         selectedValue={departuresData.directionId}
+                        variant="primary"
                     />
                 )}
                 {!_.isEmpty(departuresData.routeId) && !_.isEmpty(`${departuresData.directionId}`) && (
@@ -93,6 +116,7 @@ class DepartureForm extends MountedComponent {
                         onChange={departuresData.handleStopSelection}
                         options={stops}
                         selectedValue={departuresData.stopPlace}
+                        variant="primary"
                     />
                 )}
             </div>
@@ -145,6 +169,11 @@ const style = (theme) => ({
             marginBottom: "45px",
             marginLeft: "auto",
             marginRight: "auto",
+            "& .Mui-selected": {
+                backgroundColor: theme.palette.primary['main'],
+                borderColor: theme.palette.primary['main'],
+                color: "#FFF"
+            }
         }
     },
     departureSearchForm: {
