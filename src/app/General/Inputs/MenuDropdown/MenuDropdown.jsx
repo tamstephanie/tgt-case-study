@@ -18,27 +18,29 @@ class MenuDropdown extends MountedComponent {
         this.handleOpen = this.handleOpen.bind(this);
 
         this.state = {
-            anchor: null,
+            anchorEl: null,
             open: false,
         };
     }
 
     handleClose = () => {
-        this.setState({anchor: null, open: false});
+        this.setState({/*anchorEl: null, */open: false});
     };
 
     handleOpen = (event) => {
         this.setState({
-            anchor: event.currentTarget,
+            anchorEl: event.currentTarget,
             open: true
         });
     }
 
     render() {
-        let {classes} = this.props;
+        let {classes, isFirstChild} = this.props;
+        let className = isFirstChild ? "" : " not-first-menu-dropdown";
         return (
-            <div className={classes.menuDropdown}>
+            <div className={classes.menuDropdown + className}>
                 <Button
+                    className={classes.menuButton}
                     onClick={this.handleOpen}
                     endIcon={<KeyboardArrowDown />}
                     size="large"
@@ -46,12 +48,11 @@ class MenuDropdown extends MountedComponent {
                     {this.props.menuTitle}
                 </Button>
                 <Menu
-                    anchorEl={this.state.anchor}
+                    className={classes.menu}
+                    anchorEl={this.state.anchorEl}
                     open={this.state.open}
                     onClose={this.handleClose}
                     elevation={0}
-                    getContentAnchorEl={null}
-                    anchorOrigin={{vertical: "bottom", horizontal: "left"}}
                 >
                     {_.map(this.props.menuItems, (menuItem, index) => (
                         <MenuItem key={index} onClick={this.handleClose}>
@@ -86,6 +87,20 @@ MenuDropdown.propTypes = {
      * @type {String}
      */
     menuTitle: PropTypes.string.isRequired,
+    /**
+     * Object meant for styling
+     * @type {Object}
+     */
+    classes: PropTypes.object,
+    /**
+     * Indicates if this is the first menu.
+     * @type {Boolean}
+     */
+    isFirstChild: PropTypes.bool,
 };
+
+MenuDropdown.defaultProps = {
+    isFirstChild: false
+}
 
 export default withStyles(MenuDropdownStyle)(MenuDropdown);
