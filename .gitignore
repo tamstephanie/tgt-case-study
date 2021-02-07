@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+
+# NPM Ignores
+npm-debug.log.*
+npm-debug.log
+node_modules/
