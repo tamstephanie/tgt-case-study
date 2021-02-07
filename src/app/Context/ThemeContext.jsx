@@ -1,18 +1,18 @@
 import {createMuiTheme} from "@material-ui/core";
 import _ from "lodash";
 
-const themeDefault = {
-    main: "#FFF",
-    var1: "",
-    var2: ""
+const common = {
+    main: "#ffffff",
+    var1: "#343a40",
+    var2: "#f0f0f0"
 };
 const primary = {
-    main: "#0097D0",
-    var1: "#047DB5",
-    var2: "#DBF4FD"
+    main: "#0097d0",
+    var1: "#047db5",
+    var2: "#dbf4fd"
 };
 const secondary = {
-    main: "#0053A0"
+    main: "#0053a0"
 };
 const success = {
     main: "#008244",
@@ -20,12 +20,12 @@ const success = {
     var2: ""
 };
 const warning = {
-    main: "#FFD200",
+    main: "#ffd200",
     var1: "",
     var2: ""
 };
 const error = {
-    main: "#ED1B2E",
+    main: "#ed1b2e",
     var1: "",
     var2: ""
 };
@@ -34,44 +34,44 @@ const error = {
 const defaultButton = {
     name: "default",
     standard: {
-        color: primary['main'],
-        backgroundColor: themeDefault['main'],
-        borderColor: themeDefault['main']
+        color: primary.main,
+        backgroundColor: common.main,
+        borderColor: common.main
     },
     hover: {
-        color: themeDefault['main'],
-        backgroundColor: primary['main'],
-        borderColor: primary['main']
+        color: common.main,
+        backgroundColor: primary.main,
+        borderColor: primary.main
     }
 };
 const primaryButton = {
     name: "primary",
     standard: {
-        color: themeDefault['main'],
-        backgroundColor: primary['main'],
-        borderColor: primary['main']
+        color: common.main,
+        backgroundColor: primary.main,
+        borderColor: primary.main
     },
     hover: {
-        color: themeDefault['main'],
-        backgroundColor: primary['var1'],
-        borderColor: primary['var1']
+        color: common.main,
+        backgroundColor: primary.var1,
+        borderColor: primary.var1
     }
 };
 const secondaryButton = {
     name: "secondary",
     standard: {
-        color: primary['var1'],
-        backgroundColor: primary['var2'],
-        borderColor: primary['var2']
+        color: primary.var1,
+        backgroundColor: primary.var2,
+        borderColor: primary.var2
     },
     hover: {
-        color: primary['var1'],
-        backgroundColor: primary['var2'],
-        borderColor: primary['var2']
+        color: primary.var1,
+        backgroundColor: primary.var2,
+        borderColor: primary.var2
     }
 };
 
-
+// Provides all of the styling for a button
 function buttonBsStyle({name, standard, hover}) {
     const btnBaseName = `&.${name}`;
     return {
@@ -118,6 +118,7 @@ function buttonBsStyle({name, standard, hover}) {
     }
 }
 
+// Provides all of the styling for a toggle button
 function toggleBtnBsStyle({standard, hover}) {
     return {
         // Base button styling
@@ -173,11 +174,11 @@ function getHoverStyle(hover) {
 }
 
 export const theme = createMuiTheme({
-    palette: {default: themeDefault, primary, secondary, success, warning, error},
+    palette: {common, primary, secondary, success, warning, error},
     overrides: {
         MuiAppBar: {
             colorDefault: {
-                backgroundColor: themeDefault['main']
+                backgroundColor: common.main
             }
         },
         MuiButton: {
@@ -185,6 +186,15 @@ export const theme = createMuiTheme({
                 ...buttonBsStyle(defaultButton),
                 ...buttonBsStyle(primaryButton),
                 ...buttonBsStyle(secondaryButton)
+            }
+        },
+        MuiMenu: {
+            list: {
+                borderRadius: "0px"
+            },
+            paper: {
+                backgroundColor: common.var2,
+                borderRadius: "0px"
             }
         },
         MuiToggleButton: {

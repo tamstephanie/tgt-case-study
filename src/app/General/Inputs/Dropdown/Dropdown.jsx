@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import _ from "lodash";
 import {FormControl, InputLabel, MenuItem, Select, withStyles} from "@material-ui/core";
 
+import {DropdownStyle} from "./Dropdown.style";
+
 /**
  * Basic component that renders a Material UI Select dropdown
  */
@@ -12,6 +14,7 @@ class Dropdown extends Component {
         return (
             <FormControl className={classes.dropdown} disabled={disabled} fullWidth color={color}>
                 {!_.isEmpty(inputLabel) && (
+                    // Display a label for the dropdown, if provided
                     <InputLabel>{inputLabel}</InputLabel>
                 )}
                 <Select
@@ -21,6 +24,7 @@ class Dropdown extends Component {
                     variant="outlined"
                 >
                     {!_.isEmpty(emptyOption) && (
+                        // Display an option that lets the user pick "nothing"
                         <MenuItem className={classes.optionItem} key="empty" value="">{emptyOption}</MenuItem>
                     )}
                     {_.map(options, (option) => {
@@ -58,6 +62,7 @@ Dropdown.propTypes = {
     selectedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
     /**
      * Indicates if the dropdown should be disabled
+     * @type {Boolean}
      */
     disabled: PropTypes.bool,
     /**
@@ -98,16 +103,4 @@ Dropdown.defaultProps = {
     options: []
 };
 
-const style = (theme) => ({
-    dropdown: {
-        "& .MuiSelect-root": {
-            fontSize: "1.15rem",
-            width: "100%"
-        }
-    },
-    optionItem: {
-        fontSize: "1.15rem"
-    }
-});
-
-export default withStyles(style)(Dropdown);
+export default withStyles(DropdownStyle)(Dropdown);

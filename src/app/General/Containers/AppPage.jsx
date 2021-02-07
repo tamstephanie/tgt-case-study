@@ -11,7 +11,7 @@ class AppPage extends PureComponent {
     render() {
         return (
             <div className="app-page-content">
-                <Typography variant="h2"><b>{this.props.title}</b></Typography>
+                <Typography variant="h5"><b>{this.props.title}</b></Typography>
                 {this.props.children}
             </div>
         );

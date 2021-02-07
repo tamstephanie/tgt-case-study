@@ -1,9 +1,11 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {AppBar, Container, Toolbar, Typography, withStyles} from "@material-ui/core";
+import {AppBar, Container, Toolbar, withStyles} from "@material-ui/core";
 
+import MenuDropdown from "app/General/Inputs/MenuDropdown/MenuDropdown";
 import MetroTransitLogo from "content/images/metro-transit-logo.svg";
+import {UserActionBarStyle} from "./UserActionBar.style";
 
 /**
  * Toolbar that contains various global app functions
@@ -22,7 +24,15 @@ class UserActionBar extends Component {
                 <AppBar position="static" color="default">
                     <Container>
                         <Toolbar>
-                            <MetroTransitLogo />
+                            <div className="clickable-icon">
+                                <MetroTransitLogo onClick={() => {window.location.href="#/"}} />
+                            </div>
+                            <MenuDropdown
+                                menuTitle="Help"
+                                menuItems={[
+                                    {link: "/lost-found", text: "Lost & Found"},
+                                ]}
+                            />
                         </Toolbar>
                     </Container>
                 </AppBar>
@@ -39,18 +49,4 @@ UserActionBar.propTypes = {
     classes: PropTypes.object,
 };
 
-/**
- * Custom styling for the component
- */
-const style = (theme) => ({
-    actionBar: {
-        "& .MuiAppBar-root": {
-            // boxShadow: "none"
-        },
-        "& .MuiContainer-root": {
-            padding: "0.5rem 0px"
-        }
-    }
-});
-
-export default withStyles(style)(UserActionBar);
+export default withStyles(UserActionBarStyle)(UserActionBar);

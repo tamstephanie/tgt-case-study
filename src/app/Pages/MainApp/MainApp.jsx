@@ -6,8 +6,10 @@ import {Container, withStyles} from "@material-ui/core";
 
 import AppContextProvider from "./AppContextProvider";
 import HelpApp from "app/Pages/Help/HelpApp";
+import LostFound from "app/Pages/Help/LostFound/LostFound"
 import NexTripApp from "app/Pages/TripTools/NexTrip/NexTripApp";
 import UserActionBar from "app/Pages/Navigation/UserActionBar/UserActionBar";
+import {MainAppStyle} from "./MainApp.style";
 
 /**
  * Front page of the application
@@ -20,8 +22,13 @@ class MainApp extends Component {
     renderMain() {
         return (
             <Switch>
+                {/*NexTrip page*/}
                 <Route exact path="/nextrip" component={NexTripApp} />
-                <Route exact path="/help" component={HelpApp} />
+                
+                {/*Help pages*/}
+                <Route exact path="/lost-found" component={LostFound} />
+
+                {/*Redirect automatically to NexTrip page*/}
                 <Redirect exact from="/" to="/nextrip" />
             </Switch>
         )
@@ -48,10 +55,4 @@ MainApp.propTypes = {
     classes: PropTypes.object
 };
 
-const style = (theme) => ({
-    mainApp: {
-        padding: "0px"
-    }
-});
-
-export default withStyles(style)(MainApp);
+export default withStyles(MainAppStyle)(MainApp);

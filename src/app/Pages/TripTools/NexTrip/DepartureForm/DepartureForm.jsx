@@ -7,11 +7,13 @@ import {ToggleButtonGroup, ToggleButton} from "@material-ui/lab";
 
 import DepartureContext from "app/Context/DepartureContext";
 import {withContext} from "app/WrappersHOCs/Wrappers/withContext";
-
 import Dropdown from "app/General/Inputs/Dropdown/Dropdown";
 import MountedComponent from "app/Utilities/MountedComponent";
-import { color } from "@material-ui/system";
+import {DepartureFormStyle} from "./DepartureForm.style";
 
+/**
+ * Local enum that indicates the method of retrieving live departure information
+ */
 const DEPARTURE_SEARCH_TYPE = Object.freeze({
     ROUTE: "route",
     STOP_ID: "stopId"
@@ -19,14 +21,15 @@ const DEPARTURE_SEARCH_TYPE = Object.freeze({
 
 /**
  * Shapes the array of data to match the expected format (see below) for [Dropdown]
- * @note Assumes that the array passed into the function is an array of objects. Otherwise, there's no need
- *  to shape the data into the desired format shown below.
  * <pre>
  * {
  *     value: String,
  *     label: String
  * }
  * </pre>
+ *
+ * @note This assumes that [options] is an array of objects. Otherwise, it doesn't make sense to pass the
+ *  array through this function to shape the data
  *
  * @param {Object[]} options - The list data to shape
  * @param {String} valueGetter - Field ID for the value
@@ -59,7 +62,8 @@ class DepartureForm extends MountedComponent {
     }
 
     /**
-     * 
+     * Function responsible for
+     *
      * @param {Event} event - ignored
      * @param {DEPARTURE_SEARCH_TYPE} newToggleVal - The new toggle value. One of DEPARTURE_SEARCH_TYPE
      */
@@ -67,6 +71,11 @@ class DepartureForm extends MountedComponent {
         this.setState({departureSearchType: newToggleVal});
     }
 
+    /**
+     * Renders a group of toggle buttons that control how to retrieve live departure information
+     *
+     * @returns {JSX}
+     */
     renderDepartureToggle() {
         return (
             <ToggleButtonGroup
@@ -77,15 +86,20 @@ class DepartureForm extends MountedComponent {
                 color="primary"
             >
                 <ToggleButton value={DEPARTURE_SEARCH_TYPE.ROUTE}>
-                    By route
+                    <b>By route</b>
                 </ToggleButton>
                 <ToggleButton value={DEPARTURE_SEARCH_TYPE.STOP_ID}>
-                    By stop #
+                    <b>By stop #</b>
                 </ToggleButton>
             </ToggleButtonGroup>
         )
     }
 
+    /**
+     * Renders the dropdowns to get live departures by route
+     *
+     * @returns {JSX}
+     */
     renderDropdownForm() {
         let {classes, departuresData} = this.props;
         let routes = shapeDropdownOptions(departuresData.routes, "route_id", "route_label");
@@ -123,6 +137,11 @@ class DepartureForm extends MountedComponent {
         );
     }
 
+    /**
+     * Renders a number-only input. Used for getting live departures by stop ID
+     *
+     * @returns {JSX}
+     */
     renderStopIdInput() {
         return (
             <FormControl variant="outlined" fullWidth>
@@ -154,38 +173,10 @@ class DepartureForm extends MountedComponent {
 
 DepartureForm.propTypes = {
     /**
+     * Departure information obtained from/by {@link DepartureContext}
      * @type {Object}
      */
     departuresData: PropTypes.object.isRequired,
 };
 
-const style = (theme) => ({
-    departureSearch: {
-        fontSize: "1.15rem",
-        marginLeft: "auto",
-        marginRight: "auto",
-        maxWidth: "40%",
-        "& .MuiToggleButtonGroup-root": {
-            marginBottom: "45px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            "& .Mui-selected": {
-                backgroundColor: theme.palette.primary['main'],
-                borderColor: theme.palette.primary['main'],
-                color: "#FFF"
-            }
-        }
-    },
-    departureSearchForm: {
-        marginLeft: "auto",
-        marginRight: "auto",
-        "& .DepartureForm-departureSearchForm-4": {
-            marginBottom: "15px"
-        },
-        "& .MuiInput-root": {
-            fontSize: "1.15rem"
-        }
-    }
-});
-
-export default withContext(DepartureContext, "departuresData")(withStyles(style)(DepartureForm));
+export default withContext(DepartureContext, "departuresData")(withStyles(DepartureFormStyle)(DepartureForm));
