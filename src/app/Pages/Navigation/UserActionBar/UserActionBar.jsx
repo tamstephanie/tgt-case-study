@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {AppBar, Container, Toolbar, withStyles} from "@material-ui/core";
+import {AppBar, Container, Divider, Toolbar, withStyles} from "@material-ui/core";
 
 import MenuDropdown from "app/General/Inputs/MenuDropdown/MenuDropdown";
 import MetroTransitLogo from "content/images/metro-transit-logo.svg";
@@ -28,11 +28,19 @@ class UserActionBar extends Component {
                                 <MetroTransitLogo onClick={() => {window.location.href="#/"}} />
                             </div>
                             <MenuDropdown
+                                menuTitle="Trip Tools"
+                                menuItems={[
+                                    {link: "/nextrip", text: "NexTrip"},
+                                ]}
+                                isFirstChild
+                            />
+                            <MenuDropdown
                                 menuTitle="Help"
                                 menuItems={[
                                     {link: "/lost-found", text: "Lost & Found"},
                                 ]}
                             />
+                            <Divider orientation="vertical" />
                         </Toolbar>
                     </Container>
                 </AppBar>
