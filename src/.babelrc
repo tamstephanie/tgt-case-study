@@ -1,0 +1,23 @@
+{
+    "env": {
+        "development": {
+            "presets": [
+                ["@babel/preset-env", {
+                    "modules": false,
+                    "targets": {
+                        "browsers": [
+                            "last 3 Chrome versions",
+                            "last 2 Firefox versions",
+                            "last 2 Safari versions"
+                        ]
+                    }
+                }],
+                "@babel/preset-react"
+            ],
+            "plugins": [
+                "@babel/plugin-proposal-class-properties",
+                "@babel/plugin-transform-runtime"
+            ]
+        }
+    }
+}
