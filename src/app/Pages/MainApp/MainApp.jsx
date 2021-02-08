@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import {Redirect, Route, Switch} from "react-router-dom";
-import {Container, withStyles} from "@material-ui/core";
+import {Grid, withStyles} from "@material-ui/core";
 
 import AppContextProvider from "./AppContextProvider";
 import LostFound from "app/Pages/Help/LostFound/LostFound"
@@ -36,20 +36,23 @@ class MainApp extends Component {
     render() {
         let {classes} = this.props;
         return (
-            <Container maxWidth="xl" className={classes.mainApp}>
-                <AppContextProvider>
-                    <UserActionBar />
-                    {this.renderMain()}
-                </AppContextProvider>
-            </Container>
+            <AppContextProvider>
+                <Grid container className="app-grid">
+                    <Grid item xs={12} className={classes.mainContent}>
+                        <UserActionBar />
+                        {this.renderMain()}
+                    </Grid>
+                </Grid>
+            </AppContextProvider>
         );
     }
 }
 
 MainApp.propTypes = {
     /**
-     * Object containing styling
-     * @type {Object}
+     * JSON object of CSS styling, which is then applied to the corresponding component(s)
+     * @type {JSS}
+     * @optional
      */
     classes: PropTypes.object
 };

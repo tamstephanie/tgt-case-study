@@ -1,16 +1,18 @@
 export const UserActionBarStyle = (theme) => ({
     actionBar: {
+        overflow: "hidden",
         "& .MuiAppBar-root": {
             boxShadow: "none"
         },
-        "& .MuiContainer-root": {
-            padding: "0px 0px"
+        "& .MuiToolbar-root": {
+            margin: "0rem 5.5rem",
+            minHeight: "75px"
         },
         "& .clickable-icon": {
             cursor: "pointer"
         },
         "& .not-first-menu-dropdown": {
-            marginLeft: "0px"
+            marginLeft: "0rem"
         },
     },
 });

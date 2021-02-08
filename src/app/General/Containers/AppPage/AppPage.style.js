@@ -4,7 +4,7 @@ export const AppPageStyle = (theme) => ({
         marginBottom: "50px",
         minHeight: "250px",
         "& .app-title-card": {
-            padding: "7.25rem 0rem 2rem 2.75rem"
+            padding: "7.25rem 0rem 2rem 4.5rem"
         }
     },
     appTitle: {

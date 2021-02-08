@@ -13,7 +13,7 @@ class AppPage extends PureComponent {
     render() {
         let {classes} = this.props;
         return (
-            <React.Fragment>
+            <div className="app-page">
                 <Container className={classes.header} maxWidth="xl">
                     <div className="app-title-card">
                         <Card className={classes.appTitle} raised={false}>
@@ -29,7 +29,7 @@ class AppPage extends PureComponent {
                     </Typography>
                     {this.props.children}
                 </Container>
-            </React.Fragment>
+            </div>
         );
     }
 }
