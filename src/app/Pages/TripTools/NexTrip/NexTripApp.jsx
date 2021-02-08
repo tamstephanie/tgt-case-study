@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
+import {Typography} from "@material-ui/core";
 import {Route, Switch} from "react-router-dom";
 
 import AppPage from "app/General/Containers/AppPage/AppPage";
@@ -15,7 +16,7 @@ class NexTripApp extends PureComponent {
     render() {
         return (
             <div className={this._tag}>
-                <AppPage title="NexTrip">
+                <AppPage title="NexTrip" subtitle="Real-time Departures">
                     <DepartureForm />
                 </AppPage>
             </div>

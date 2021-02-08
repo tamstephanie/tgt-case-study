@@ -113,7 +113,7 @@ class DepartureForm extends MountedComponent {
                     onChange={departuresData.handleRouteSelection}
                     options={routes}
                     selectedValue={departuresData.routeId}
-                    variant="primary"
+                    color="secondary"
                 />
                 {!_.isEmpty(departuresData.routeId) && (
                     <Dropdown
@@ -121,7 +121,7 @@ class DepartureForm extends MountedComponent {
                         onChange={departuresData.handleDirectionSelection}
                         options={directions}
                         selectedValue={departuresData.directionId}
-                        variant="primary"
+                        color="secondary"
                     />
                 )}
                 {!_.isEmpty(departuresData.routeId) && !_.isEmpty(`${departuresData.directionId}`) && (
@@ -130,7 +130,7 @@ class DepartureForm extends MountedComponent {
                         onChange={departuresData.handleStopSelection}
                         options={stops}
                         selectedValue={departuresData.stopPlace}
-                        variant="primary"
+                        color="secondary"
                     />
                 )}
             </div>

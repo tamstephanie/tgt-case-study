@@ -88,15 +88,17 @@ MenuDropdown.propTypes = {
      */
     menuTitle: PropTypes.string.isRequired,
     /**
-     * Object meant for styling
-     * @type {Object}
+     * JSON object of CSS styling, which is then applied to the corresponding component(s)
+     * @type {JSS}
+     * @optional
      */
     classes: PropTypes.object,
     /**
      * Indicates if this is the first menu.
      * @type {Boolean}
+     * @optional
      */
-    isFirstChild: PropTypes.bool,
+    isFirstChild: PropTypes.bool
 };
 
 MenuDropdown.defaultProps = {
