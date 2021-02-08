@@ -13,14 +13,11 @@ export const DepartureFormStyle = (theme) => ({
                 borderColor: theme.palette.primary.main,
                 color: "#FFF"
             }
-        },
-        "& .MuiToggleButton-root": {
-            fontSize: "1.15rem",
-            textTransform: "inherit"
         }
     },
     departureDropdowns: {
         "& .MuiFormControl-root": {
+            color: theme.palette.common.var1,
             marginBottom: "15px"
         }
     },

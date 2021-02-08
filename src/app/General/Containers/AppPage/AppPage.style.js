@@ -4,7 +4,7 @@ export const AppPageStyle = (theme) => ({
         marginBottom: "50px",
         minHeight: "250px",
         "& .app-title-card": {
-            padding: "125px 0px 25px 65px"
+            padding: "7.25rem 0rem 2rem 2.75rem"
         }
     },
     appTitle: {
@@ -14,8 +14,17 @@ export const AppPageStyle = (theme) => ({
         maxWidth: "fit-content",
         "& .MuiCardContent-root": {
             color: theme.palette.secondary.main,
-            padding: "16px",
+            padding: "1rem",
             textAlign: "center"
+        },
+        "& .MuiTypography-root": {
+            lineHeight: "revert"
         }
+    },
+    content: {
+        "& .subtitle": {
+            color: theme.palette.common.var1,
+            textAlign: "center"
+        }    
     }
 });

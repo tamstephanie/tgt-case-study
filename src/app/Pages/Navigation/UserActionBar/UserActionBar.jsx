@@ -51,10 +51,11 @@ class UserActionBar extends Component {
 
 UserActionBar.propTypes = {
     /**
-     * Object meant for styling
-     * @type {Object}
+     * JSON object of CSS styling, which is then applied to the corresponding component(s)
+     * @type {JSS}
+     * @optional
      */
-    classes: PropTypes.object,
+    classes: PropTypes.object
 };
 
 export default withStyles(UserActionBarStyle)(UserActionBar);

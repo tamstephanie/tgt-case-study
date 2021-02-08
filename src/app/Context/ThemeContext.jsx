@@ -3,7 +3,7 @@ import _ from "lodash";
 
 const common = {
     main: "#ffffff",
-    var1: "#343a40",
+    var1: "#626462",
     var2: "#f0f0f0"
 };
 const primary = {
@@ -12,22 +12,24 @@ const primary = {
     var2: "#dbf4fd"
 };
 const secondary = {
-    main: "#0053a0"
+    main: "#0053a0",
+    var1: "#063d70",
+    var2: "#add8ff"
 };
 const success = {
     main: "#008244",
-    var1: "",
-    var2: ""
+    var1: "#00592e",
+    var2: "#c5fcc7"
 };
 const warning = {
     main: "#ffd200",
-    var1: "",
-    var2: ""
+    var1: "#f9b925",
+    var2: "#fff27d"
 };
 const error = {
     main: "#ed1b2e",
-    var1: "",
-    var2: ""
+    var1: "#b71c1c",
+    var2: "#ffcdd2"
 };
 
 // Button styling
@@ -175,6 +177,18 @@ function getHoverStyle(hover) {
 
 export const theme = createMuiTheme({
     palette: {common, primary, secondary, success, warning, error},
+    typography: {
+        fontFamily: [
+            "proxima-nova",
+            "-apple-system",
+            "BlinkMacSystemFont",
+            "Segoe UI",
+            "Roboto",
+            "Helvetica Neue",
+            "Arial",
+            "sans-serif"
+        ].join(",")
+    },
     overrides: {
         MuiAppBar: {
             colorDefault: {
@@ -183,9 +197,14 @@ export const theme = createMuiTheme({
         },
         MuiButton: {
             root: {
+                fontSize: "1.5rem",
+                textTransform: "inherit",
                 ...buttonBsStyle(defaultButton),
                 ...buttonBsStyle(primaryButton),
                 ...buttonBsStyle(secondaryButton)
+            },
+            textSizeLarge: {
+                fontSize: "1.15rem"
             }
         },
         MuiMenu: {
@@ -197,10 +216,33 @@ export const theme = createMuiTheme({
                 borderRadius: "0px"
             }
         },
-        MuiToggleButton: {
+        MuiToggleButtonGroup: {
             root: {
-                ...toggleBtnBsStyle(secondaryButton)
+                backgroundColor: primary.main,
+                borderColor: primary.main,
+                color: common.main
             }
         },
+        MuiToggleButton: {
+            root: {
+                textTransform: "inherit",
+                ...toggleBtnBsStyle(secondaryButton)
+            },
+            sizeLarge: {
+                fontSize: "1.35rem",
+                padding: "0.5rem 1.25rem"
+            }
+        },
+        MuiTypography: {
+            h1: {
+                fontSize: "2.45rem"
+            },
+            h2: {
+                fontSize: "1.95rem"
+            },
+            body1: {
+                fontSize: "1.15rem"
+            }
+        }
     }
 });
