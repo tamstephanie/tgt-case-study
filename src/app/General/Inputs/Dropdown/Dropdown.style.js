@@ -1,11 +1,14 @@
 export const DropdownStyle =  (theme) => ({
     dropdown: {
         "& .MuiSelect-root": {
-            fontSize: "1.15rem",
+            backgroundColor: theme.palette.common.main,
+            color: theme.palette.common.var1,
+            fontSize: "1.25rem",
             width: "100%"
         }
     },
     optionItem: {
-        fontSize: "1.15rem"
+        color: theme.palette.common.var1,
+        fontSize: "1.25rem"
     }
 });

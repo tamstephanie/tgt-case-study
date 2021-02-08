@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {FormControl, InputLabel, MenuItem, Select, withStyles} from "@material-ui/core";
+import {FormControl, InputLabel, Select, withStyles} from "@material-ui/core";
 
 import {DropdownStyle} from "./Dropdown.style";
 
@@ -22,10 +22,11 @@ class Dropdown extends Component {
                     onChange={this.props.onChange}
                     displayEmpty={!_.isEmpty(emptyOption) ? true : false}
                     variant="outlined"
+                    native
                 >
                     {!_.isEmpty(emptyOption) && (
                         // Display an option that lets the user pick "nothing"
-                        <MenuItem className={classes.optionItem} key="empty" value="">{emptyOption}</MenuItem>
+                        <option className={classes.optionItem} key="empty" value="">{emptyOption}</option>
                     )}
                     {_.map(options, (option) => {
                         let label, value;
@@ -37,9 +38,9 @@ class Dropdown extends Component {
                         }
 
                         return (
-                            <MenuItem className={classes.optionItem} key={value} value={value}>
+                            <option className={classes.optionItem} key={value} value={value}>
                                 {!_.isNil(label) ? label : value}
-                            </MenuItem>
+                            </option>
                         );
                     })}
                 </Select>
