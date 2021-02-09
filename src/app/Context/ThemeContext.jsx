@@ -177,18 +177,6 @@ function getHoverStyle(hover) {
 
 export const theme = createMuiTheme({
     palette: {common, primary, secondary, success, warning, error},
-    typography: {
-        fontFamily: [
-            "proxima-nova",
-            "-apple-system",
-            "BlinkMacSystemFont",
-            "Segoe UI",
-            "Roboto",
-            "Helvetica Neue",
-            "Arial",
-            "sans-serif"
-        ].join(",")
-    },
     overrides: {
         MuiAppBar: {
             colorDefault: {
@@ -232,17 +220,31 @@ export const theme = createMuiTheme({
                 fontSize: "1.35rem",
                 padding: "0.5rem 1.25rem"
             }
-        },
-        MuiTypography: {
-            h1: {
-                fontSize: "2.45rem"
-            },
-            h2: {
-                fontSize: "1.95rem"
-            },
-            body1: {
-                fontSize: "1.15rem"
-            }
         }
-    }
+    },
+    typography: {
+        fontFamily: [
+            "proxima-nova",
+            "-apple-system",
+            "BlinkMacSystemFont",
+            "Segoe UI",
+            "Roboto",
+            "Helvetica Neue",
+            "Arial",
+            "sans-serif"
+        ].join(","),
+        h1: {
+            fontSize: "2.45rem",
+            fontWeight: "bold"
+        },
+        h2: {
+            color: common.var2,
+            fontSize: "1.95rem",
+            fontWeight: "bold"
+        },
+        body1: {
+            color: common.var2,
+            fontSize: "1.15rem"
+        }
+    },
 });
