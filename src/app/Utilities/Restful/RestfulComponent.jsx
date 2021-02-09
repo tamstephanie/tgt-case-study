@@ -129,7 +129,7 @@ class RestfulComponent extends MountedComponent {
                  * @param {...*} arguments - Any new arguments supplied to the polling function, replacing the
                  *  initial arguments, if provided
                  */
-                const resume = (arguments) => {
+                const resume = () => {
                     clearTimeout(id);
                     let args = _.size(arguments) > 0 ? arguments : initArgs;
                     let pausedFn = this._polls[index]._pausedFn;
