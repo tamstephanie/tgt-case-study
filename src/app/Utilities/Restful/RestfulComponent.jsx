@@ -67,8 +67,84 @@ class RestfulComponent extends MountedComponent {
         /**
          * 
          */
-        this.createPolling = () => {
+        this.createPolling = (pollFn, options = DEFAULTS, ...initArgs) => {
+            options = _.defaultsDeep(options, DEFAULTS);
+            let index = _.size(this._polls);
+            this._polls.push({id: null, pollFn, initArgs, ...options});
 
+            /**
+             * Function queues a polling in [wait] milliseconds. After the wait, the timer is reset and a new one
+             *  is prepared
+             * 
+             * @param {...*} repollArgs - Any new arguments supplied to the polling function, replacing inital
+             *  arguments, if provided
+             */
+            return (...repollArgs) => {
+                let args = !_.isEmpty(repollArgs) ? repollArgs : initArgs;
+                let [id, repollFn = () => {}, repollWait] = _.at(this._polls[index], ["id", "pollFn", "wait"]);
+                clearTimeout(id);
+                id = setTimeout(() => repollFn(...args), repollWait);
+                this._polls[index] = {...this._polls[index], id};
+
+                /**
+                 * Temporarily stops polling until the polling function is called again
+                 */
+                const halt = () => {
+                    clearTimeout(id);
+                };
+
+                /**
+                 * Terminates the current polling function
+                 * @throws {Exception} on attempt to repoll
+                 */
+                const terminate = () => {
+                    clearTimeout(id);
+                    this._polls[index] = {
+                        id: -1,
+                        wait: options.wait,
+                        pollFn: () => {
+                            throw new Error("This polling function has been terminated");
+                        }
+                    };
+                };
+
+                /**
+                 * Pauses any polling (ongoing and further), until resumed
+                 */
+                const pause = () => {
+                    clearTimeout(id);
+                    this._polls[index] = {
+                        id,
+                        wait: repollWait,
+                        pollFn: () => {
+                            console.warn(`This polling function was already paused: ${id}`);
+                        },
+                        _pausedFn: pollFn
+                    };
+                };
+
+                /**
+                 * Resumes polling operations
+                 *
+                 * @param {...*} arguments - Any new arguments supplied to the polling function, replacing the
+                 *  initial arguments, if provided
+                 */
+                const resume = (arguments) => {
+                    clearTimeout(id);
+                    let args = _.size(arguments) > 0 ? arguments : initArgs;
+                    let pausedFn = this._polls[index]._pausedFn;
+                    this._polls[index] = {
+                        id: setTimeout(() => pausedFn(...args), repollWait),
+                        wait: repollWait,
+                        pollFn: pausedFn,
+                        _pausedFn: () => {
+                            throw new Error("Attempted to resume polling function after it was already resumed");
+                        }
+                    };
+                };
+
+                return {halt, terminate, pause, resume};
+            }
         };
     }
 };
