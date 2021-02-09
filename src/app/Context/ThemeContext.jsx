@@ -238,12 +238,12 @@ export const theme = createMuiTheme({
             fontWeight: "bold"
         },
         h2: {
-            color: common.var2,
+            color: common.var1,
             fontSize: "1.95rem",
             fontWeight: "bold"
         },
         body1: {
-            color: common.var2,
+            color: common.var1,
             fontSize: "1.15rem"
         }
     },

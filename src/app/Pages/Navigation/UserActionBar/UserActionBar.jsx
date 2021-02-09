@@ -20,11 +20,11 @@ class UserActionBar extends Component {
     render() {
         let {classes} = this.props;
         return (
-            <div className={classes.actionBar}>
+            <div className={classes.actionBar + " action-bar"}>
                 <AppBar position="sticky" color="default">
                     <Toolbar disableGutters>
                         <div className="clickable-icon">
-                            <MetroTransitLogo onClick={() => {window.location.href="#/"}} />
+                            <MetroTransitLogo onClick={() => {window.location.href="#"}} />
                         </div>
                         <MenuDropdown
                             menuTitle="Trip Tools"

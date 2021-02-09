@@ -11,7 +11,7 @@ export const UserActionBarStyle = (theme) => ({
         "& .clickable-icon": {
             cursor: "pointer"
         },
-        "& .not-first-menu-dropdown": {
+        "& .menu-dropdown-not-first": {
             marginLeft: "0rem"
         },
     },

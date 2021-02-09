@@ -14,16 +14,16 @@ class AppPage extends PureComponent {
         let {classes} = this.props;
         return (
             <div className="app-page">
-                <Container className={classes.header} maxWidth="xl">
+                <Container className={classes.header + " header"} maxWidth="xl">
                     <div className="app-title-card">
-                        <Card className={classes.appTitle} raised={false}>
+                        <Card className={classes.appTitle + " app-title"} raised={false}>
                             <CardContent>
                                 <Typography variant="h1"><b>{this.props.title}</b></Typography>
                             </CardContent>
                         </Card>
                     </div>
                 </Container>
-                <Container className={classes.content}>
+                <Container className={classes.content + " content"}>
                     <Typography className="subtitle" variant="h2" gutterBottom>
                         <b>{this.props.subtitle}</b>
                     </Typography>

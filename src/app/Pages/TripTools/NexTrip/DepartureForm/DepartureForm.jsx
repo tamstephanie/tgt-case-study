@@ -48,7 +48,7 @@ const shapeDropdownOptions = (options, valueGetter, labelGetter = null) => (
 );
 
 /**
- * Form that lets the user 
+ * Form that lets the user either select route information or enter a stop ID to get live departures
  */
 class DepartureForm extends MountedComponent {
     constructor(props) {
@@ -107,7 +107,7 @@ class DepartureForm extends MountedComponent {
         let stops = shapeDropdownOptions(departuresData.stops, "place_code", "description");
 
         return (
-            <div className={classes.departureDropdowns}>
+            <div className={classes.departureDropdowns + " departure-dropowns"}>
                 <Dropdown
                     emptyOption="Select route"
                     onChange={departuresData.handleRouteSelection}
@@ -159,9 +159,9 @@ class DepartureForm extends MountedComponent {
     render() {
         let {classes} = this.props;
         return (
-            <Paper className={classes.departureSearch} elevation={0} square>
+            <Paper className={classes.departureSearch + " departure-search"} elevation={0} square>
                 {this.renderDepartureToggle()}
-                <Paper className={classes.departureSearchForm} elevation={0} square>
+                <Paper className={classes.departureSearchForm + " departure-search-form"} elevation={0} square>
                     {_.isEqual(this.state.departureSearchType, DEPARTURE_SEARCH_TYPE.ROUTE) ? 
                         this.renderDropdownForm() : this.renderStopIdInput()
                     }

@@ -36,14 +36,14 @@ class MenuDropdown extends MountedComponent {
 
     render() {
         let {classes, isFirstChild} = this.props;
-        let className = isFirstChild ? "" : " not-first-menu-dropdown";
+        let className = isFirstChild ? "" : "-not-first";
         return (
-            <div className={classes.menuDropdown + className}>
+            <div className={classes.menuDropdown + ` menu-dropdown${className}`}>
                 {/**
                  * Maybe try using ToggleButton to get that active state styling
                  */}
                 <Button
-                    className={classes.menuButton}
+                    className={classes.menuButton + " menu-btn"}
                     onClick={this.handleOpen}
                     endIcon={this.state.open ? <ExpandLess /> : <ExpandMore />}
                     size="large"
@@ -52,7 +52,7 @@ class MenuDropdown extends MountedComponent {
                     {this.props.menuTitle}
                 </Button>
                 <Menu
-                    className={classes.menu}
+                    className={classes.menu + " menu"}
                     anchorEl={this.state.anchorEl}
                     open={this.state.open}
                     onClose={this.handleClose}

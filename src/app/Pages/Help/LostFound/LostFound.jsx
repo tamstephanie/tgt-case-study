@@ -37,9 +37,9 @@ class LostFound extends PureComponent {
 
     render() {
         return (
-            <div className={this.props.classes.lostFoundPage}>
+            <div className={this.props.classes.lostFoundPage + " lost-found-page"}>
                 <AppPage title={"Lost & Found"}>
-                    <Paper className={this.props.classes.pageContent} elevation={0}>
+                    <Paper className={this.props.classes.pageContent + " page-content"} elevation={0}>
                         {this.renderText()}
                     </Paper>
                 </AppPage>

@@ -12,7 +12,7 @@ class Dropdown extends Component {
     render() {
         let {disabled, emptyOption, classes, color, inputLabel, options, selectedValue} = this.props;
         return (
-            <FormControl className={classes.dropdown} disabled={disabled} fullWidth color={color}>
+            <FormControl className={classes.dropdown + " dropdown"} disabled={disabled} fullWidth color={color}>
                 {!_.isEmpty(inputLabel) && (
                     // Display a label for the dropdown, if provided
                     <InputLabel>{inputLabel}</InputLabel>
@@ -26,7 +26,9 @@ class Dropdown extends Component {
                 >
                     {!_.isEmpty(emptyOption) && (
                         // Display an option that lets the user pick "nothing"
-                        <option className={classes.optionItem} key="empty" value="">{emptyOption}</option>
+                        <option className={classes.optionItem + " option-item"} key="empty" value="">
+                            {emptyOption}
+                        </option>
                     )}
                     {_.map(options, (option) => {
                         let label, value;
@@ -38,7 +40,7 @@ class Dropdown extends Component {
                         }
 
                         return (
-                            <option className={classes.optionItem} key={value} value={value}>
+                            <option className={classes.optionItem + " option-item"} key={value} value={value}>
                                 {!_.isNil(label) ? label : value}
                             </option>
                         );
