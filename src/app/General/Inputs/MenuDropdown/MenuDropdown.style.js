@@ -18,7 +18,6 @@ export const MenuDropdownStyle = (theme) => ({
         "& .MuiMenu-paper": {
             backgroundColor: theme.palette.common.var2,
             borderRadius: "0px",
-            marginTop: "48px"
         },
         "& .MuiButtonBase-root": {
             fontSize: "1.15rem",

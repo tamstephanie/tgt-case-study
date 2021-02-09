@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import {Button, Link, Menu, MenuItem, withStyles} from "@material-ui/core";
-import {KeyboardArrowDown} from '@material-ui/icons';
+import {ExpandLess, ExpandMore} from '@material-ui/icons';
 
 import MountedComponent from "app/Utilities/MountedComponent";
 import {MenuDropdownStyle} from "./MenuDropdown.style";
@@ -39,11 +39,15 @@ class MenuDropdown extends MountedComponent {
         let className = isFirstChild ? "" : " not-first-menu-dropdown";
         return (
             <div className={classes.menuDropdown + className}>
+                {/**
+                 * Maybe try using ToggleButton to get that active state styling
+                 */}
                 <Button
                     className={classes.menuButton}
                     onClick={this.handleOpen}
-                    endIcon={<KeyboardArrowDown />}
+                    endIcon={this.state.open ? <ExpandLess /> : <ExpandMore />}
                     size="large"
+                    disableRipple
                 >
                     {this.props.menuTitle}
                 </Button>
@@ -52,7 +56,11 @@ class MenuDropdown extends MountedComponent {
                     anchorEl={this.state.anchorEl}
                     open={this.state.open}
                     onClose={this.handleClose}
+                    anchorOrigin={{horizontal: "left", vertical: "bottom"}}
+                    getContentAnchorEl={null}
                     elevation={0}
+                    autoFocus={false}
+                    variant="menu"
                 >
                     {_.map(this.props.menuItems, (menuItem, index) => (
                         <MenuItem key={index} onClick={this.handleClose}>
