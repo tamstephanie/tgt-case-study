@@ -5,6 +5,7 @@ import {Redirect, Route, Switch} from "react-router-dom";
 import {Grid, withStyles} from "@material-ui/core";
 
 import AppContextProvider from "./AppContextProvider";
+import ErrorPage from "app/General/Containers/Errors/ErrorPage/ErrorPage";
 import LostFound from "app/Pages/Help/LostFound/LostFound"
 import NexTripApp from "app/Pages/TripTools/NexTrip/NexTripApp";
 import UserActionBar from "app/Pages/Navigation/UserActionBar/UserActionBar";
@@ -21,14 +22,17 @@ class MainApp extends Component {
     renderMain() {
         return (
             <Switch>
-                {/*NexTrip page*/}
+                {/* NexTrip page */}
                 <Route exact path="/nextrip" component={NexTripApp} />
                 
-                {/*Help pages*/}
+                {/* Help pages */}
                 <Route exact path="/lost-found" component={LostFound} />
-
-                {/*Redirect automatically to NexTrip page*/}
+                
+                {/* Redirect automatically to NexTrip page */}
                 <Redirect exact from="/" to="/nextrip" />
+
+                {/* On invalid path, display ErrorPage. Must be last to catch not include "/" path */}
+                <Route path="*" component={ErrorPage} />
             </Switch>
         )
     }
@@ -38,7 +42,7 @@ class MainApp extends Component {
         return (
             <AppContextProvider>
                 <Grid container className="app-grid">
-                    <Grid item xs={12} className={classes.mainContent}>
+                    <Grid item xs={12} className={classes.mainContent + " main-content"}>
                         <UserActionBar />
                         {this.renderMain()}
                     </Grid>
