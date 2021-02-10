@@ -6,6 +6,7 @@ import {Route, Switch} from "react-router-dom";
 
 import AppPage from "app/General/Containers/AppPage/AppPage";
 import DepartureForm from "./DepartureForm/DepartureForm";
+import DepartureTable from "./DepartureTable/DepartureTable";
 
 class NexTripApp extends PureComponent {
     constructor(props) {
@@ -18,6 +19,7 @@ class NexTripApp extends PureComponent {
             <div className={this._tag}>
                 <AppPage title="NexTrip" subtitle="Real-time Departures">
                     <DepartureForm />
+                    <DepartureTable />
                 </AppPage>
             </div>
         );

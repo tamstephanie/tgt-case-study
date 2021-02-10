@@ -16,7 +16,7 @@ class ErrorPage extends PureComponent {
                     <Typography>
                         Oops! The page you are looking for was not found. It may be moved or not available.
                     </Typography>
-                    <Button variant="outlined" href="#" endIcon={<ArrowForward />}>
+                    <Button variant="outlined" href="#" endIcon={<ArrowForward />} color="secondary">
                         Return home
                     </Button>
                 </AppPage>

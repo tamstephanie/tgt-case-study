@@ -2,7 +2,7 @@ import React from "react";
 import _ from "lodash";
 
 import NexTripApi from "app/Utilities/NexTripApi";
-import MountedComponent from "app/Utilities/MountedComponent";
+import RestfulComponent from "app/Utilities/Restful/RestfulComponent";
 
 const DepartureContext = React.createContext({
     directions: [],
@@ -17,12 +17,16 @@ const DepartureContext = React.createContext({
 /**
  * Re
  */
-class DepartureProvider extends MountedComponent {
+class DepartureProvider extends RestfulComponent {
     constructor(props) {
         super(props);
 
         this.fetchRoutes = this.fetchRoutes.bind(this);
         this.fetchRouteDirections = this.fetchRouteDirections.bind(this);
+        this.fetchRouteStops = this.fetchRouteStops.bind(this);
+        this.fetchStopDepartures = this.fetchStopDepartures.bind(this);
+        this.fetchStopDeparturesById = this.fetchStopDeparturesById.bind(this);
+        this.pollDepartures = this.createPolling(this.fetchDeparturesByStopId);
         this.handleDirectionSelection = this.handleDirectionSelection.bind(this);
         this.handleRouteSelection = this.handleRouteSelection.bind(this);
         this.handleStopSelection = this.handleStopSelection.bind(this);
@@ -34,11 +38,17 @@ class DepartureProvider extends MountedComponent {
             routes: [],
             routeId: "",
             stops: [],
+            stopId: "",
             stopInfo: {},
             stopPlace: "",
 
-            // Functions
+            // Fetch functions
             fetchRoutes: this.fetchRoutes,
+            fetchRouteDirections: this.fetchRouteDirections,
+            fetchRouteStops: this.fetchRouteStops,
+            fetchStopDepartures: this.fetchStopDepartures,
+            fetchStopDeparturesById: this.fetchStopDeparturesById,
+            // Handler functions
             handleDirectionSelection: this.handleDirectionSelection,
             handleRouteSelection: this.handleRouteSelection,
             handleStopSelection: this.handleStopSelection,
@@ -64,10 +74,9 @@ class DepartureProvider extends MountedComponent {
 
     /**
      * Fetches the directions (Eastbound/Westbound or Northbound/Southbound) for the selected route
-     * 
-     * @param {String} routeId - The ID of the route
      */
-    fetchRouteDirections(routeId) {
+    fetchRouteDirections() {
+        let {routeId} = this.state;
         if (!_.isEmpty(routeId)) {
             NexTripApi.get(`directions/${routeId}`).then(response => {
                 if (response.ok) {
@@ -79,10 +88,9 @@ class DepartureProvider extends MountedComponent {
 
     /**
      * 
-     * @param {String} routeId 
-     * @param {String} directionId 
      */
-    fetchRouteStops(routeId, directionId) {
+    fetchRouteStops() {
+        let {routeId, directionId} = this.state;
         if (!_.isEmpty(routeId) && !_.isEmpty(`${directionId}`)) {
             NexTripApi.get(`stops/${routeId}/${directionId}`).then(response => {
                 if (response.ok) {
@@ -91,19 +99,39 @@ class DepartureProvider extends MountedComponent {
             });
         }
     }
-    
-    fetchStopDepartures(routeId, directionId, stopPlace) {
+
+    /**
+     * 
+     */
+    fetchStopDepartures() {
+        let {routeId, directionId, stopPlace} = this.state;
         let validParams = !_.isEmpty(routeId) && !_.isEmpty(`${directionId}`) && !_.isEmpty(stopPlace);
         if (validParams) {
             NexTripApi.get(`${routeId}/${directionId}/${stopPlace}`).then(response => {
                 if (response.ok) {
                     this.setState({
                         departures: _.get(response, "data.departures", []),
-                        stopInfo: _.get(response, "data.stops[0]")
-                    });
+                        stopId: _.get(response, "data.stops[0].stop_id"),
+                        stopInfo: _.get(response, "data.stops[0]"),
+                    }, this.pollDepartures);
                 }
             });
         }
+    }
+
+    /**
+     * 
+     */
+    fetchStopDeparturesById() {
+        let {stopId} = this.state;
+        NexTripApi.get(`${stopId}`).then(response => {
+            if (response.ok) {
+                this.setState({
+                    departures: _.get(response, "data.departures", []),
+                    stopInfo: _.get(response, "data.stops[0]", {})
+                });    
+            }
+        });
     }
 
     /**
@@ -113,9 +141,7 @@ class DepartureProvider extends MountedComponent {
     handleDirectionSelection = (event) => {
         this.setState({
             directionId: event.target.value
-        }, () => {
-            this.fetchRouteStops(this.state.routeId, this.state.directionId);
-        });
+        }, this.fetchRouteStops);
     }
 
     /**
@@ -125,9 +151,7 @@ class DepartureProvider extends MountedComponent {
     handleRouteSelection = (event) => {
         this.setState({
             routeId: event.target.value
-        }, () => {
-            this.fetchRouteDirections(this.state.routeId);
-        });
+        }, this.fetchRouteDirections);
     };
 
     /**
@@ -135,9 +159,9 @@ class DepartureProvider extends MountedComponent {
      * @param {Event} event 
      */
     handleStopSelection = (event) => {
-        this.setState({stopPlace: event.target.value}, () => {
-            this.fetchStopDepartures(this.state.routeId, this.state.directionId, this.state.stopPlace);
-        });
+        this.setState({
+            stopPlace: event.target.value
+        }, this.fetchStopDepartures);
     };
 
     render() {
