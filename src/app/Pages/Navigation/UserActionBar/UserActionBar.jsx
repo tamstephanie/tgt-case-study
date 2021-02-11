@@ -13,8 +13,6 @@ import {UserActionBarStyle} from "./UserActionBar.style";
 class UserActionBar extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {};
     }
 
     render() {

@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppPage should match the rendered snapshot 1`] = `
+<div
+  className="app-page"
+>
+  <div
+    className="MuiContainer-root AppPage-header-1 header MuiContainer-maxWidthXl"
+  >
+    <div
+      className="app-title-card"
+    >
+      <div
+        className="MuiPaper-root MuiCard-root AppPage-appTitle-2 app-title MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <div
+          className="MuiCardContent-root"
+        >
+          <h1
+            className="MuiTypography-root MuiTypography-h1"
+          >
+            <b>
+              Sample Page
+            </b>
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiContainer-root AppPage-content-3 content MuiContainer-maxWidthLg"
+  />
+</div>
+`;

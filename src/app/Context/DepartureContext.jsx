@@ -15,7 +15,7 @@ const DepartureContext = React.createContext({
 });
 
 /**
- * Re
+ * Context that handles fetching 
  */
 class DepartureProvider extends RestfulComponent {
     constructor(props) {
@@ -26,7 +26,7 @@ class DepartureProvider extends RestfulComponent {
         this.fetchRouteStops = this.fetchRouteStops.bind(this);
         this.fetchStopDepartures = this.fetchStopDepartures.bind(this);
         this.fetchStopDeparturesById = this.fetchStopDeparturesById.bind(this);
-        this.pollDepartures = this.createPolling(this.fetchDeparturesByStopId);
+        this.pollDeparturesById = this.createPolling(this.fetchStopDeparturesById);
         this.handleDirectionSelection = this.handleDirectionSelection.bind(this);
         this.handleRouteSelection = this.handleRouteSelection.bind(this);
         this.handleStopSelection = this.handleStopSelection.bind(this);
@@ -61,8 +61,6 @@ class DepartureProvider extends RestfulComponent {
 
     /**
      * Fetches the current day's routes from the NexTrip API
-     *
-     * @note Assumes that the data received, if any, is already sorted
      */
     fetchRoutes() {
         NexTripApi.get("routes").then(response => {
@@ -73,7 +71,7 @@ class DepartureProvider extends RestfulComponent {
     }
 
     /**
-     * Fetches the directions (Eastbound/Westbound or Northbound/Southbound) for the selected route
+     * Fetches the directions based on the selected route
      */
     fetchRouteDirections() {
         let {routeId} = this.state;
@@ -87,7 +85,7 @@ class DepartureProvider extends RestfulComponent {
     }
 
     /**
-     * 
+     * Fetches the list of stops based on the route and direction
      */
     fetchRouteStops() {
         let {routeId, directionId} = this.state;
@@ -101,7 +99,7 @@ class DepartureProvider extends RestfulComponent {
     }
 
     /**
-     * 
+     * Fetches the list of live departures based on the route, direction, and stop
      */
     fetchStopDepartures() {
         let {routeId, directionId, stopPlace} = this.state;
@@ -113,18 +111,17 @@ class DepartureProvider extends RestfulComponent {
                         departures: _.get(response, "data.departures", []),
                         stopId: _.get(response, "data.stops[0].stop_id"),
                         stopInfo: _.get(response, "data.stops[0]"),
-                    }, this.pollDepartures);
+                    }, this.pollDeparturesById);
                 }
             });
         }
     }
 
     /**
-     * 
+     * Fetches the list of live departures based on the stop ID
      */
     fetchStopDeparturesById() {
-        let {stopId} = this.state;
-        NexTripApi.get(`${stopId}`).then(response => {
+        NexTripApi.get(`${this.state.stopId}`).then(response => {
             if (response.ok) {
                 this.setState({
                     departures: _.get(response, "data.departures", []),
@@ -135,7 +132,7 @@ class DepartureProvider extends RestfulComponent {
     }
 
     /**
-     * 
+     * Function that handles selecting the route direction from the dropdown
      * @param {Event} event 
      */
     handleDirectionSelection = (event) => {
@@ -145,7 +142,7 @@ class DepartureProvider extends RestfulComponent {
     }
 
     /**
-     * 
+     * Function that handles selecting the route from the dropdown
      * @param {Event} event - Event containing the route ID
      */
     handleRouteSelection = (event) => {
@@ -155,7 +152,7 @@ class DepartureProvider extends RestfulComponent {
     };
 
     /**
-     * 
+     * Function that handles selecting the stop place from the dropdown 
      * @param {Event} event 
      */
     handleStopSelection = (event) => {

@@ -144,7 +144,7 @@ class RestfulComponent extends MountedComponent {
                 };
 
                 return {halt, terminate, pause, resume};
-            }
+            };
         };
     }
 };

@@ -7,6 +7,13 @@ export const ErrorPageStyle = (theme) => ({
                     color: theme.palette.common.main
                 }
             }
+        },
+        "& .MuiPaper-root": {
+            marginLeft: "auto",
+            marginRight: "auto"
+        },
+        "& .MuiButton-outlined": {
+            marginTop: "50px"
         }
     }
 });

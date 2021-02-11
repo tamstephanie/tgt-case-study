@@ -1,6 +1,11 @@
 import _ from "lodash";
 import ResponseData from "app/Utilities/ObjectClasses/ResponseData";
 
+/**
+ * 
+ * @param {*} body 
+ * @param {*} options 
+ */
 const bodyBuilder = (body, options) => {
     if (!_.isNil(body)) {
         let defaults;
@@ -22,17 +27,38 @@ const bodyBuilder = (body, options) => {
     return options;
 };
 
+/**
+ * Performs a RESTful GET request to the API
+ * @param {*} url 
+ * @param {*} options 
+ * @param {*} execution 
+ * @param {*} preventRedirects 
+ */
 const get = (url, options = {}, execution = "json", preventRedirects = false) => {
     options.method = "GET";
     return fetchAndResolve(url, options, execution, preventRedirects);
 };
 
+/**
+ * Performs a RESTful POST request to the API
+ * @param {*} url 
+ * @param {*} body 
+ * @param {*} options 
+ * @param {*} execution 
+ */
 const post = (url, body = null, options = {}, execution = "json") => {
     options.method = "POST";
     options = bodyBuilder(body, options);
     return fetchAndResolve(url, options, execution);
 };
 
+/**
+ * Performs a RESTful PUT request to the API
+ * @param {String} url 
+ * @param {Object} body 
+ * @param {Object} options 
+ * @param {String | Function} execution 
+ */
 const put = (url, body = null, options = {}, execution = "json") => {
     options.method = "PUT";
     options = bodyBuilder(body, options);
@@ -40,11 +66,8 @@ const put = (url, body = null, options = {}, execution = "json") => {
 };
 
 /**
- * Performs a REST DELETE to the API
- * @notes
- *  - Generally only the first two arguments are needed
- *  - Method name is shorted since 'delete' is a keyword
- *
+ * Performs a RESTful DELETE to the API
+ * @note The function name has been shorted since 'delete' is a reserved keyword
  * @param {String} url - API URL endpoint. Includes the domain and the query parameters
  * @param {Object} body 
  * @param {Object} options 
@@ -56,6 +79,13 @@ const del = (url, body = null, options = {}, execution = "json") => {
     return fetchAndResolve(url, options, execution);
 };
 
+/**
+ * 
+ * @param {String} url 
+ * @param {Object} options 
+ * @param {String | Function} execution 
+ * @param {Boolean} preventRedirects 
+ */
 const fetchAndResolve = (url, options = {}, execution = "json", preventRedirects = false) => {
     const defaults = {};
     options = _.defaultsDeep(options, defaults);

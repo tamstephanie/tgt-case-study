@@ -24,9 +24,11 @@ class AppPage extends PureComponent {
                     </div>
                 </Container>
                 <Container className={classes.content + " content"}>
-                    <Typography className="subtitle" variant="h2" gutterBottom>
-                        <b>{this.props.subtitle}</b>
-                    </Typography>
+                    {!_.isEmpty(this.props.subtitle) && (
+                        <Typography className="subtitle" variant="h2" gutterBottom>
+                            <b>{this.props.subtitle}</b>
+                        </Typography>
+                    )}
                     {this.props.children}
                 </Container>
             </div>
@@ -52,6 +54,10 @@ AppPage.propTypes = {
      * @optional
      */
     subtitle: PropTypes.string,
+};
+
+AppPage.defaultProps = {
+    subtitle: ""
 };
 
 export default withStyles(AppPageStyle)(AppPage);

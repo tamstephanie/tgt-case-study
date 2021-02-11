@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import {FormControl, InputLabel, Select, withStyles} from "@material-ui/core";
@@ -8,7 +8,7 @@ import {DropdownStyle} from "./Dropdown.style";
 /**
  * Basic component that renders a Material UI Select dropdown
  */
-class Dropdown extends Component {
+class Dropdown extends PureComponent {
     render() {
         let {disabled, emptyOption, classes, color, inputLabel, options, selectedValue} = this.props;
         return (
@@ -49,7 +49,6 @@ class Dropdown extends Component {
             </FormControl>
         );
     }
-
 }
 
 Dropdown.propTypes = {

@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {Button, Typography, withStyles} from "@material-ui/core";
+import {Button, Container, Paper, Typography, withStyles} from "@material-ui/core";
 import {ArrowForward} from "@material-ui/icons";
 
 import AppPage from "app/General/Containers/AppPage/AppPage";
@@ -13,12 +13,16 @@ class ErrorPage extends PureComponent {
         return (
             <div className={classes.errorPage + " error-page"}>
                 <AppPage title="Page Not Found">
-                    <Typography>
-                        Oops! The page you are looking for was not found. It may be moved or not available.
-                    </Typography>
-                    <Button variant="outlined" href="#" endIcon={<ArrowForward />} color="secondary">
-                        Return home
-                    </Button>
+                    <Container maxWidth="sm">
+                        <Paper elevation={0} square>
+                            <Typography>
+                                Oops! The page you are looking for was not found. It may be moved or not available.
+                            </Typography>
+                            <Button variant="outlined" href="#" endIcon={<ArrowForward />} color="secondary">
+                                Return home
+                            </Button>
+                        </Paper>
+                    </Container>
                 </AppPage>
             </div>
         );

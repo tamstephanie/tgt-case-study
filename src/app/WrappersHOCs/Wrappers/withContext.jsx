@@ -1,6 +1,11 @@
 import React, {PureComponent} from "react";
 import _ from "lodash";
 
+/**
+ * Wraps a component with a context to and 
+ * @param {React.Component} Context - The context that wraps the specified component
+ * @param {String} propName - The name of the prop to pass to the wrapped component
+ */
 export function withContext(Context, propName = "context") {
     return (WrappedComponent) => wrap(Context, propName, WrappedComponent);
 }

@@ -1,7 +1,9 @@
 import _ from "lodash";
 
 /**
- * Class responsible for shaping the Response
+ * Class responsible for shaping the Promise.Response
+ *
+ * Currently assumes that the response from the API returns these fields
  */
 class ResponseData {
     constructor(status, ok, data) {
