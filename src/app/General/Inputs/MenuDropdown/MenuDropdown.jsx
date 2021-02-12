@@ -24,7 +24,7 @@ class MenuDropdown extends MountedComponent {
     }
 
     handleClose = () => {
-        this.setState({/*anchorEl: null, */open: false});
+        this.setState({anchorEl: null, open: false});
     };
 
     handleOpen = (event) => {

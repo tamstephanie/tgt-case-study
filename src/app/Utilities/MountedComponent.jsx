@@ -1,11 +1,17 @@
 import React, {Component} from "react";
 import _ from "lodash";
 
+/**
+ * Component that works with any stateful components. It checks if the component is mounted and
+ * whether setting state is allowed.
+ * Note that this is very similar to {@link RestfulComponent}. The main difference is that this component
+ * doesn't involve any polling
+ */
 class MountedComponent extends Component {
     constructor(props) {
         super(props);
         /**
-         * The name of the 
+         * Identifier for the component. Can be uesd for styling
          * @type {String}
          */
         this._tag = _.kebabCase(this.constructor.name);
@@ -15,16 +21,12 @@ class MountedComponent extends Component {
          */
         this._mounted = false;
 
-                //------------------ EXTENDED COMPONENT HANDLING ------------------
+        //------------------ EXTENDED COMPONENT HANDLING ------------------
         /**
          * This section handles the React component lifecycle methods.
          *
          * Each method has basic functionalities built into it to standardize the lifecycle method.
          * It also combines the extended component's lifecycle method
-         */
-
-        /**
-         * 
          */
         let extenderDidMount = this.componentDidMount;
         this.componentDidMount = (prevProps, prevState) => {
@@ -35,9 +37,6 @@ class MountedComponent extends Component {
             }
         };
 
-        /**
-         * 
-         */
         let extenderWillUnmount = this.componentWillUnmount;
         this.componentWillUnmount = () => {
             this._mounted = false;
@@ -47,9 +46,6 @@ class MountedComponent extends Component {
             }
         };
 
-        /**
-         * 
-         */
         let extenderSetState = this.setState.bind(this);
         this.setState = (newState, callback) => {
             if (this._mounted) {

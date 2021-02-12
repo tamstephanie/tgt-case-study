@@ -6,6 +6,13 @@ import _ from "lodash";
  * Currently assumes that the response from the API returns these fields
  */
 class ResponseData {
+    /**
+     * Constructs a ResponseData instance
+     *
+     * @param {Number} status - The HTTP response code
+     * @param {Boolean} ok - Indicates if the response is good
+     * @param {*} data - The resolved body, like a JSON object or String
+     */
     constructor(status, ok, data) {
         if (!_.isNumber(status) || !_.isBoolean(ok)) {
             throw new TypeError("Illegal argument types provided to ResponseData constructor.")
@@ -24,9 +31,18 @@ class ResponseData {
     }
 
     /**
-     * Function that evaluates if the ResponseData contains JSON data
+     * Function that evaluates if the data is in JSON format
      */
-    hasData = () => !_.isNil(this.data) && _.isObject(this.data);
+    hasData() {
+        return !_.isNil(this.data) && _.isObject(this.data);
+    }
+
+    /**
+     * Function that evaluates if the data is in a text format
+     */
+    hasText() {
+        return !_.isNil(this.data) && _.isString(this.data);
+    }
 }
 
 export default ResponseData;

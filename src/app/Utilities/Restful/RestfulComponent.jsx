@@ -1,16 +1,23 @@
-import React from "react";
+import React, {Component} from "react";
 import _ from "lodash";
-
-import MountedComponent from "app/Utilities/MountedComponent";
 
 const DEFAULTS = {
     startNow: false,
     wait: 5000
 };
 
-class RestfulComponent extends MountedComponent {
+/**
+ * Component that works with any components that make RESTful API calls. It checks if the component
+ * is mounted and whether setting state is allowed
+ */
+class RestfulComponent extends Component {
     constructor(props) {
         super(props);
+        /**
+         * Indicates if the component mounted, and if so, permits setting state
+         * @type {Boolean}
+         */
+        this._mounted = false;
         /**
          * List of polling functions
          * @type {Function[]}
@@ -23,10 +30,6 @@ class RestfulComponent extends MountedComponent {
          *
          * Each method has basic functionalities built into it to standardize the lifecycle method.
          * It also combines the extended component's lifecycle method
-         */
-
-        /**
-         * 
          */
         let extenderDidMount = this.componentDidMount;
         this.componentDidMount = (prevProps, prevState) => {
@@ -43,9 +46,6 @@ class RestfulComponent extends MountedComponent {
             }
         };
 
-        /**
-         * 
-         */
         let extenderWillUnmount = this.componentWillUnmount;
         this.componentWillUnmount = () => {
             this._mounted = false;
@@ -55,17 +55,25 @@ class RestfulComponent extends MountedComponent {
                 clearTimeout(poll.id);
             });
             this._polls = [];
-
-            // 
             if (!_.isNil(extenderWillUnmount)) {
                 extenderWillUnmount = extenderWillUnmount.bind(this);
                 extenderWillUnmount();
             }
         };
 
+        let extenderSetState = this.setState.bind(this);
+        this.setState = (newState, callbackFn) => {
+            if (this._mounted) {
+                extenderSetState(newState, callbackFn);
+            }
+        };
+
         //------------------ CREATING POLLING FUNCTIONS ------------------
         /**
-         * 
+         * Function that handles creating and tracking bound 
+         * @param {Function} pollFn - Method to be polled
+         * @param {Object} options - Polling configuration options
+         * @param  {...any} initArgs - Any initial arguments to pass to the polling function
          */
         this.createPolling = (pollFn, options = DEFAULTS, ...initArgs) => {
             options = _.defaultsDeep(options, DEFAULTS);
@@ -78,6 +86,15 @@ class RestfulComponent extends MountedComponent {
              * 
              * @param {...*} repollArgs - Any new arguments supplied to the polling function, replacing inital
              *  arguments, if provided
+             * 
+             * @return {{Function}}
+             *  @property {Function} halt - Function that temporarily stops polling until the polling function
+             *  is called again
+             *  @property {Function} terminate - Function that interrupts polling and and destroys any currently
+             *  running polls, permanently disabling them
+             *  @property {Function} pause - Function that interrupts the current polling and pauses the polling 
+             *  @property {Function} resume - Function that interrupts the current polling state and resumes
+             *  the polling if the polling was previously paused
              */
             return (...repollArgs) => {
                 let args = !_.isEmpty(repollArgs) ? repollArgs : initArgs;

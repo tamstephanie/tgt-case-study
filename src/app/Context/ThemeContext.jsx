@@ -1,6 +1,6 @@
 import {createMuiTheme} from "@material-ui/core";
-import _ from "lodash";
 
+// Theme palette colors
 const common = {
     main: "#ffffff",
     var1: "#626462",

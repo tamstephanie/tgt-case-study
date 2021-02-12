@@ -3,7 +3,16 @@ import _ from "lodash";
 import {hasValue} from "app/Utilities/Utilities";
 
 /**
+ * Creates a higher-order-component (HOC) that renders a component based on whether the evaluation
+ * condition returns true. Also, the evaluation condition has access to any props passed to it since
+ * it is bound to the HOC.
  * 
+ * @param {Class} WrappedComponent - The component to wrap
+ * @param {Function | String | String[]} evaluateCondition - Evaluation condition that 
+ * @param {*} alternative - Handles rendering if the evaluation condition is false
+ * 
+ * @return {React.Component} A component that accepts an evaluation condition in addition to the wrapped
+ * component's props
  */
 export const conditionalExistence = function (WrappedComponent, evaluationCondition, alternative) {
     class ConditionalExistence extends Component {
