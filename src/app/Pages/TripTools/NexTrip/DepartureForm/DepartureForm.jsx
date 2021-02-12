@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {FormControl, Input, InputAdornment, InputLabel, Paper, withStyles} from "@material-ui/core";
+import {Button, Grid, TextField, withStyles} from "@material-ui/core";
 import {Search} from "@material-ui/icons";
 import {ToggleButtonGroup, ToggleButton} from "@material-ui/lab";
 
@@ -57,24 +57,44 @@ class DepartureForm extends MountedComponent {
         this.handleDepartureSearchToggle = this.handleDepartureSearchToggle.bind(this);
 
         this.state = {
-            departureSearchType: DEPARTURE_SEARCH_TYPE.ROUTE
+            /**
+             * The type of search being done
+             * @type {String}
+             */
+            departureSearchType: DEPARTURE_SEARCH_TYPE.ROUTE,
+            /**
+             * Indicates if the 'Enter' key was pressed
+             * @type {Boolean}
+             */
+            enterKeyPressed: false
         };
     }
 
     /**
-     * Function responsible for
-     *
+     * Function responsible for changing the method of searching for live departures
      * @param {Event} event - ignored
      * @param {DEPARTURE_SEARCH_TYPE} newToggleVal - The new toggle value. One of DEPARTURE_SEARCH_TYPE
      */
     handleDepartureSearchToggle = (event, newToggleVal) => {
-        this.setState({departureSearchType: newToggleVal});
+        // Force an option to always be selected
+        if (!_.isNil(newToggleVal)) {
+            this.setState({departureSearchType: newToggleVal});
+        }
+    }
+
+    /**
+     * Function that fetches the live departures when the user submits the input
+     * @param {Event} event 
+     */
+    handleOnEnter = (event) => {
+        if (event.keyCode === 13) {
+            // event.preventDefault();
+            this.props.departuresData.fetchStopDeparturesById();
+        }
     }
 
     /**
      * Renders a group of toggle buttons that control how to retrieve live departure information
-     *
-     * @returns {JSX}
      */
     renderDepartureToggle() {
         return (
@@ -97,8 +117,6 @@ class DepartureForm extends MountedComponent {
 
     /**
      * Renders the dropdowns to get live departures by route
-     *
-     * @returns {JSX}
      */
     renderDropdownForm() {
         let {classes, departuresData} = this.props;
@@ -138,35 +156,43 @@ class DepartureForm extends MountedComponent {
     }
 
     /**
-     * Renders a number-only input. Used for getting live departures by stop ID
-     *
-     * @returns {JSX}
+     * Renders a text input to get live departures by stop ID
      */
     renderStopIdInput() {
+        let {handleStopIdInput, fetchStopDeparturesById} = this.props.departuresData;
         return (
-            <FormControl variant="outlined" fullWidth>
-                <InputLabel>Enter stop #</InputLabel>
-                <Input
-                    id="stop-id-input"
-                    type="number"
-                    startAdornment={<InputAdornment position="start"><Search /></InputAdornment>}
-                    color="primary"
+            <div className={this.props.classes.stopIdInput + " stop-id-input"}>
+                <TextField
+                    label="Enter stop #"
+                    onChange={handleStopIdInput}
+                    onKeyPress={this.handleOnEnter}
+                    variant="outlined"
+                    fullWidth
+                    InputProps={{
+                        endAdornment: (
+                            <Button onClick={fetchStopDeparturesById} size="large" disableRipple>
+                                <Search />
+                            </Button>
+                        )
+                    }}
                 />
-            </FormControl>
+            </div>
         );
     }
 
     render() {
         let {classes} = this.props;
         return (
-            <Paper className={classes.departureSearch + " departure-search"} elevation={0} square>
-                {this.renderDepartureToggle()}
-                <Paper className={classes.departureSearchForm + " departure-search-form"} elevation={0} square>
+            <Grid className={classes.departureSearch + " departure-search"} container>
+                <Grid item xs={12} className={classes.departureSearchToggle + " departure-search-toggle"}>
+                    {this.renderDepartureToggle()}
+                </Grid>
+                <Grid className={classes.departureSearchForm + " departure-search-form"} item xs={12}>
                     {_.isEqual(this.state.departureSearchType, DEPARTURE_SEARCH_TYPE.ROUTE) ? 
                         this.renderDropdownForm() : this.renderStopIdInput()
                     }
-                </Paper>
-            </Paper>
+                </Grid>
+            </Grid>
         );
     }
 }

@@ -41,8 +41,8 @@ class DepartureTable extends RestfulComponent {
      * Lifecycle - Check if the data has updated and if so, update the state  
      */
     componentDidUpdate(prevProps) {
-        if (!_.isEqual(prevProps.departuresContextData.departures,
-            this.props.departuresContextData.departures)) {
+        if (!_.isEqual(prevProps.departuresData.departures,
+            this.props.departuresData.departures)) {
             this.setState(prevState => ({
                 data: this.paginateData(prevState.page, prevState.rowsPerPage)
             }));
@@ -107,8 +107,8 @@ class DepartureTable extends RestfulComponent {
      * @param {Number} pageSize - The rows of data to display
      */
     paginateData(page, pageSize) {
-        let data = this.marshallDepartureData(this.props.departuresContextData.departures);
-        let sliceSize = (pageSize === -1) ? _.size(this.props.departuresContextData.departures) : pageSize;
+        let data = this.marshallDepartureData(this.props.departuresData.departures);
+        let sliceSize = (pageSize === -1) ? _.size(this.props.departuresData.departures) : pageSize;
         let startSlice = page * sliceSize;
         let endSlice = (page + 1) * sliceSize;
         let pagedData = data.slice(startSlice, endSlice);
@@ -116,52 +116,49 @@ class DepartureTable extends RestfulComponent {
     }
 
     /**
-     * Renders information about the stop (name/description and the stop number)
+     * Renders general information about the stop and a paginated table of live departures
      */
-    renderStopInfo() {
-        let {stopInfo} = this.props.departuresContextData;
+    renderDepartureData() {
+        let {stopInfo} = this.props.departuresData;
         return (
-            <Grid container className="stop-info-header">
-                <Grid item xs={9}>
-                    <Typography variant="h2">{_.get(stopInfo, "description")}</Typography>
+            <React.Fragment>
+                <Grid container className="stop-info-header">
+                    <Grid item xs={9}>
+                        <Typography variant="h2">{_.get(stopInfo, "description")}</Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                        <Typography variant="h6"><b>Stop #:</b> {_.get(stopInfo, "stop_id")}</Typography>
+                    </Grid>
                 </Grid>
-                <Grid item xs={3}>
-                    <Typography variant="h6"><b>Stop #:</b> {_.get(stopInfo, "stop_id")}</Typography>
-                </Grid>
-            </Grid>
-        );
-    }
-
-    /**
-     * Renders the table of departures
-     */
-    renderTable() {
-        return (
-            <MakeTable className="departures-table"
-                data={this.state.data}
-                headers={["ROUTE", "DESTINATION", "DEPARTS"]}
-                paginated
-                paginationProps={{
-                    count: _.size(this.props.departuresContextData.departures),
-                    labelDisplayedRows: this.handlePaginationLabel,
-                    onChangePage: this.handlePageChange,
-                    onChangeRowsPerPage: this.handlePageSizeChange,
-                    page: this.state.page,
-                    rowsPerPage: this.state.rowsPerPage,
-                    rowsPerPageOptions: [5, 10, 25, {label: 'All', value: -1}],
-                    ActionsComponent: PaginationActions,
-                    SelectProps: {native: true}
-                }}
-            />
+                <MakeTable className="departures-table"
+                    data={this.state.data}
+                    headers={["ROUTE", "DESTINATION", "DEPARTS"]}
+                    paginated
+                    paginationProps={{
+                        count: _.size(this.props.departuresData.departures),
+                        labelDisplayedRows: this.handlePaginationLabel,
+                        onChangePage: this.handlePageChange,
+                        onChangeRowsPerPage: this.handlePageSizeChange,
+                        page: this.state.page,
+                        rowsPerPage: this.state.rowsPerPage,
+                        rowsPerPageOptions: [5, 10, 25, {label: 'All', value: -1}],
+                        ActionsComponent: PaginationActions,
+                        SelectProps: {native: true}
+                    }}
+                />
+            </React.Fragment>
         );
     }
 
     render() {
-        let {classes} = this.props;
+        let {classes, departuresData} = this.props;
         return (
             <Paper className={classes.liveDeparturesInfo + " live-departures-info"} elevation={0} square>
-                {this.renderStopInfo()}
-                {this.renderTable()}
+                {!_.isNil(departuresData.errorMessage) ? (
+                    <Typography className="error-message" variant="h6">
+                        {`${departuresData.stopId} is not a valid stop number. Please try again.`}
+                    </Typography>
+                ) : this.renderDepartureData()}
             </Paper>
         );
     }
@@ -172,10 +169,10 @@ DepartureTable.propTypes = {
      * Departure information obtained from/by {@link DepartureContext}
      * @type {Object}
      */
-    departuresContextData: PropTypes.object.isRequired,
+    departuresData: PropTypes.object.isRequired,
 };
 
-export default withContext(DepartureContext, "departuresContextData")(conditionalExistence(
+export default withContext(DepartureContext, "departuresData")(conditionalExistence(
     (withStyles(DepartureTableStyle)(DepartureTable)),
-    (props) => !_.isEmpty(`${props.departuresContextData.stopId}`)
+    (props) => props.departuresData.showLiveDepartures
 ));

@@ -4,9 +4,7 @@ export const DepartureTableStyle = (theme) => ({
         marginBottom: "100px",
         marginLeft: "auto",
         marginRight: "auto",
-        marginTop: "50px",
         width: "85%",
-
         // Style top part of the departures info container
         "& .stop-info-header": {
             padding: "15px 25px",
@@ -14,7 +12,9 @@ export const DepartureTableStyle = (theme) => ({
                 float: "right"
             }
         },
-
+        "& .error-message": {
+            padding: "20px 0px 50px 25px"
+        },
         // Actual departures table styling
         "& .MuiTableContainer-root": {
             marginTop: "10px"
