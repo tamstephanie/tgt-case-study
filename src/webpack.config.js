@@ -10,7 +10,8 @@ let common = {
     entry: ["babel-polyfill", "./app/index.js"],
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "index.js"
+        filename: "[name].js"
+        // chunkFilename: "[id][hash:8].js"
     },
     resolve: {
         alias: {
@@ -47,7 +48,13 @@ let common = {
     ],
     optimization: {
         minimize: true,
-        minimizer: [new TerserWebpackPlugin()]
+        minimizer: [new TerserWebpackPlugin()],
+        splitChunks: {
+            chunks: "all"
+        }
+    },
+    performance: {
+        hints: false
     }
 };
 
