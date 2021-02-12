@@ -1,9 +1,10 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import {AppBar, Divider, Toolbar, withStyles} from "@material-ui/core";
+import {AppBar, Toolbar, withStyles} from "@material-ui/core";
 
 import MenuDropdown from "app/General/Inputs/MenuDropdown/MenuDropdown";
+import {MenuDropdownDefinitions} from "./MenuDropdownDefinitions";
 import MetroTransitLogo from "content/images/metro-transit-logo.svg";
 import {UserActionBarStyle} from "./UserActionBar.style";
 
@@ -24,20 +25,13 @@ class UserActionBar extends Component {
                         <div className="clickable-icon">
                             <MetroTransitLogo onClick={() => {window.location.href="#"}} />
                         </div>
-                        <MenuDropdown
-                            menuTitle="Trip Tools"
-                            menuItems={[
-                                {link: "/nextrip", text: "NexTrip"},
-                            ]}
-                            isFirstChild
-                        />
-                        <MenuDropdown
-                            menuTitle="Help"
-                            menuItems={[
-                                {link: "/lost-found", text: "Lost & Found"},
-                            ]}
-                        />
-                        <Divider orientation="vertical" />
+                        {_.map(MenuDropdownDefinitions, (menu, index) => (
+                            <MenuDropdown
+                                menuTitle={menu.menuTitle}
+                                menuItems={menu.menuItems}
+                                isFirstChild={index === 0}
+                            />
+                        ))}
                     </Toolbar>
                 </AppBar>
             </div>
