@@ -13,7 +13,7 @@
 ## Tech Stack
 
 The main technologies used in this application are as follows:
-- ReactJS - The 
+- ReactJS - Relatively popular, well-maintained, and documented library for creating responsive and reactive user interfaces
 - Material UI - Modern styling of components
 - Jest - Works well with React to test components
 - Webpack & Babel - Transpiler & bundler for the project
