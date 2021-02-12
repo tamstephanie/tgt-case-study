@@ -25,18 +25,20 @@ The main set of instructions, common to both are as follows:
 ### Building & Running the Application
 To build and run the app, follow these steps:
 1. Navigate to `tgt-case-study/src/`
-2. Run `npm run prod` to build the production version of the application. Otherwise, run `npm run dev` to build the development version
-3. Navigate to http://localhost:8080/
-4. Begin using the app! (Note that the only two pages that actually display content are "NexTrip" and "Lost & Found")
+2. Install necessary packages to run the project by running `npm install`
+3. Run `npm run prod` to build the production version of the application. Otherwise, run `npm run dev` to build the development version
+4. Navigate to http://localhost:8080/
+5. Begin using the app! (Note that the only two pages that actually display content are "NexTrip" and "Lost & Found")
 
 ### Running Tests
 Test-driven development (TDD) is a valuable approach when developing code. TDD help the developer consider the various scenarios and associated behavior that is expected of the component (or class, if we're speaking generally). Regardless, unit tests and integration tests are important because they can prove that the code works without needing a fully-functional and running application.
 
 To actually run the tests in this project, follow these steps:
 1. Navigate to `tgt-case-study/src/`
-2. Type `npm run test` or `npm test` and press 'Enter'
-3. If no tests immediatey run, type 'a' and press 'Enter' to run all tests
-4. Tests should run and pass (there is one exception currently to that)
+2. If packages have not already been installed, run `npm install`
+3. Type `npm run test` or `npm test` and press 'Enter'
+4. If no tests immediatey run, type 'a' and press 'Enter' to run all tests
+5. Tests should run and pass (there is one exception currently to that)
 
 ## Additional Notes
 
