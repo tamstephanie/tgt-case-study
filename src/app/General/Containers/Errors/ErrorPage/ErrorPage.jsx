@@ -13,8 +13,8 @@ class ErrorPage extends PureComponent {
         return (
             <div className={classes.errorPage + " error-page"}>
                 <AppPage title="Page Not Found">
-                    <Container maxWidth="sm">
-                        <Paper elevation={0} square>
+                    <Container maxWidth="md">
+                        <Paper className="error-page-content" elevation={0} square>
                             <Typography>
                                 Oops! The page you are looking for was not found. It may be moved or not available.
                             </Typography>

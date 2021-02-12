@@ -8,9 +8,10 @@ export const ErrorPageStyle = (theme) => ({
                 }
             }
         },
-        "& .MuiPaper-root": {
+        "& .error-page-content": {
             marginLeft: "auto",
-            marginRight: "auto"
+            marginRight: "auto",
+            textAlign: "center"
         },
         "& .MuiButton-outlined": {
             marginTop: "50px"
